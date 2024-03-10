@@ -12,22 +12,9 @@ import "bytes"
 
 import "github.com/harish876/go-templ-htmx-exploration/views/layout"
 import "github.com/harish876/go-templ-htmx-exploration/views/components"
+import "github.com/harish876/go-templ-htmx-exploration/models"
 
-type FormValues struct {
-	FirstName            string
-	LastName             string
-	Email                string
-	Password             string
-	PasswordConfirmation string
-	MarketingAccept      string
-}
-
-type FormErrors struct {
-	Password string
-	Email    string
-}
-
-func exampleForm(formValues FormValues, formErrors FormErrors, showToast bool, toastMessage string) templ.Component {
+func exampleForm(formValues models.FormValues, formErrors models.FormErrors, showToast bool, toastMessage string) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -128,7 +115,7 @@ func exampleForm(formValues FormValues, formErrors FormErrors, showToast bool, t
 			var templ_7745c5c3_Var2 string
 			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(formErrors.Password)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/form/form.templ`, Line: 83, Col: 26}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/form/form.templ`, Line: 70, Col: 26}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 			if templ_7745c5c3_Err != nil {
@@ -217,7 +204,7 @@ func formParent() templ.Component {
 	})
 }
 
-func Form(formValues FormValues, formErrors FormErrors, showBool bool, toastMessage string) templ.Component {
+func Form(formValues models.FormValues, formErrors models.FormErrors, showBool bool, toastMessage string) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {

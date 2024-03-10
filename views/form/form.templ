@@ -2,22 +2,9 @@ package form
 
 import "github.com/harish876/go-templ-htmx-exploration/views/layout"
 import "github.com/harish876/go-templ-htmx-exploration/views/components"
+import "github.com/harish876/go-templ-htmx-exploration/models"
 
-type FormValues struct {
-	FirstName            string
-	LastName             string
-	Email                string
-	Password             string
-	PasswordConfirmation string
-	MarketingAccept      string
-}
-
-type FormErrors struct {
-	Password string
-	Email    string
-}
-
-templ exampleForm(formValues FormValues, formErrors FormErrors, showToast bool, toastMessage string) {
+templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, showToast bool, toastMessage string) {
 	<form
 		class="mt-8 grid grid-cols-6 gap-6 group"
 		hx-post="/form"
@@ -182,7 +169,7 @@ templ formParent() {
 	</section>
 }
 
-templ Form(formValues FormValues, formErrors FormErrors, showBool bool, toastMessage string) {
+templ Form(formValues models.FormValues, formErrors models.FormErrors, showBool bool, toastMessage string) {
 	@layout.Base("Go HTMX Templ Exploration") {
 		@formParent() {
 			@exampleForm(formValues, formErrors, showBool, toastMessage)
