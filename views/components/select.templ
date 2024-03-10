@@ -1,0 +1,27 @@
+package components
+
+type SelectOption struct {
+	Label string
+	Value string
+}
+
+type SelectProps struct {
+	Id           string
+	Name         string
+	Class        string
+	DefaultValue SelectOption
+	Options      []SelectOption
+}
+
+templ Select(selectProps SelectProps) {
+	<select
+		name={ selectProps.Name }
+		id={ selectProps.Id }
+		class="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+	>
+		<option value={ selectProps.DefaultValue.Label } disabled selected>{ selectProps.DefaultValue.Value }</option>
+		for _,option := range selectProps.Options {
+			<option value={ option.Value }>{ option.Label }</option>
+		}
+	</select>
+}

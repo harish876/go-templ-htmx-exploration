@@ -3,9 +3,25 @@ package form
 import "github.com/harish876/go-templ-htmx-exploration/views/layout"
 import "github.com/harish876/go-templ-htmx-exploration/views/components"
 
-templ form() {
+type FormValues struct {
+	FirstName            string
+	LastName             string
+	Email                string
+	Password             string
+	PasswordConfirmation string
+	MarketingAccept      string
+}
+
+type FormErrors struct {
+	Password string
+	Email    string
+}
+
+templ exampleForm(formValues FormValues, formErrors FormErrors, showToast bool, toastMessage string) {
 	<form
 		class="mt-8 grid grid-cols-6 gap-6 group"
+		hx-post="/form"
+		hx-target="body"
 		novalidate
 	>
 		<div class="col-span-6 sm:col-span-3">
@@ -16,6 +32,7 @@ templ form() {
 				Label:    "First Name",
 				Class:    "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
 				Required: true,
+				Value:    formValues.FirstName,
 			})
 		</div>
 		<div class="col-span-6 sm:col-span-3">
@@ -25,39 +42,57 @@ templ form() {
 				Name:  "last_name",
 				Label: "Last Name",
 				Class: "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
+				Value: formValues.LastName,
 			})
 		</div>
 		<div class="col-span-6">
 			@components.Input(components.InputProps{
 				Id:       "Email",
 				Typ:      components.InputTypeEmail,
-				Name:     "Email",
+				Name:     "email",
 				Label:    "Email",
 				Class:    "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
 				Required: true,
+				Value:    formValues.Email,
 			})
 		</div>
 		<div class="col-span-6 sm:col-span-3">
-			@components.Input(components.InputProps{
-				Id:       "Password",
-				Typ:      components.InputTypePassword,
-				Name:     "password",
-				Label:    "Password",
-				Required: true,
-				Class:    "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer",
-				Pattern:  ".{7,}",
-			})
-			<span class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-				Password must be at least 7 characters long
-			</span>
+			if formErrors.Password == "" {
+				@components.Input(components.InputProps{
+					Id:       "Password",
+					Typ:      components.InputTypePassword,
+					Name:     "password",
+					Label:    "Password",
+					Required: true,
+					Class:    "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer",
+					Pattern:  ".{1,}",
+				})
+				<span class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+					Password must be at least 7 characters long
+				</span>
+			} else {
+				@components.Input(components.InputProps{
+					Id:       "Password",
+					Typ:      components.InputTypePassword,
+					Name:     "password",
+					Label:    "Password",
+					Required: true,
+					Class:    "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer",
+					Pattern:  ".{1,}",
+				})
+				<span class="mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+					{ formErrors.Password }
+				</span>
+			}
 		</div>
 		<div class="col-span-6 sm:col-span-3">
 			@components.Input(components.InputProps{
-				Id:    "PasswordConfirmation",
-				Typ:   components.InputTypePassword,
-				Name:  "password_confirmation",
-				Label: "Password Confirmation",
-				Class: "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
+				Id:      "PasswordConfirmation",
+				Typ:     components.InputTypePassword,
+				Name:    "password_confirmation",
+				Label:   "Password Confirmation",
+				Class:   "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
+				Pattern: ".{7,}",
 			})
 		</div>
 		<div class="col-span-6">
@@ -100,6 +135,9 @@ templ form() {
 			</p>
 		</div>
 	</form>
+	if showToast {
+		@components.Notification("Success", toastMessage, components.NOTIFICATION_SUCCCESS)
+	}
 }
 
 templ formParent() {
@@ -144,10 +182,10 @@ templ formParent() {
 	</section>
 }
 
-templ Form() {
+templ Form(formValues FormValues, formErrors FormErrors, showBool bool, toastMessage string) {
 	@layout.Base("Go HTMX Templ Exploration") {
 		@formParent() {
-			@form()
+			@exampleForm(formValues, formErrors, showBool, toastMessage)
 		}
 	}
 }
