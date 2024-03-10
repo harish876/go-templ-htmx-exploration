@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/harish876/go-templ-htmx-exploration/models"
 	"github.com/harish876/go-templ-htmx-exploration/services"
@@ -10,8 +11,38 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+var (
+	DEFAULT_PAGE_SIZE = 1
+	DEFAULT_LIMIT     = 10
+)
+
 func GridHandler(c echo.Context) error {
-	return Render(c, http.StatusOK, grid.Grid(services.Data))
+	page, pageErr := strconv.Atoi(c.QueryParam("page"))
+	limit, limitErr := strconv.Atoi(c.QueryParam("limit"))
+
+	if pageErr != nil {
+		page = DEFAULT_PAGE_SIZE
+	}
+
+	if limitErr != nil {
+		limit = DEFAULT_LIMIT
+	}
+
+	totalPages := len(services.Data)/limit + 1
+	offset := (page - 1) * limit
+
+	var paginatedData []models.GridDataRow
+	if offset < len(services.Data) {
+		end := offset + limit
+		if end > len(services.Data) {
+			end = len(services.Data)
+		}
+		paginatedData = services.Data[offset:end]
+	} else {
+		paginatedData = []models.GridDataRow{}
+	}
+
+	return Render(c, http.StatusOK, grid.Grid(paginatedData, totalPages))
 }
 
 func GridRowHandler(c echo.Context) error {

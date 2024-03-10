@@ -6,9 +6,10 @@ import (
 	"github.com/harish876/go-templ-htmx-exploration/views/components"
 	"github.com/harish876/go-templ-htmx-exploration/utils"
 	"github.com/harish876/go-templ-htmx-exploration/models"
+	"strconv"
 )
 
-templ gridPagination() {
+templ gridPagination(totalPages int, page int, limit int) {
 	<div class="flex">
 		<a href="#" class="px-4 py-2 mx-1 text-gray-500 capitalize bg-white rounded-md cursor-not-allowed :bg-gray-800 :text-gray-600">
 			<div class="flex items-center -mx-1">
@@ -20,21 +21,11 @@ templ gridPagination() {
 				</span>
 			</div>
 		</a>
-		<a href="#" class="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:inline :bg-gray-800 :text-gray-200 hover:bg-blue-500 :hover:bg-blue-500 hover:text-white :hover:text-gray-200">
-			1
-		</a>
-		<a href="#" class="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:inline :bg-gray-800 :text-gray-200 hover:bg-blue-500 :hover:bg-blue-500 hover:text-white :hover:text-gray-200">
-			2
-		</a>
-		<a href="#" class="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:inline :bg-gray-800 :text-gray-200 hover:bg-blue-500 :hover:bg-blue-500 hover:text-white :hover:text-gray-200">
-			3
-		</a>
-		<a href="#" class="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:inline :bg-gray-800 :text-gray-200 hover:bg-blue-500 :hover:bg-blue-500 hover:text-white :hover:text-gray-200">
-			4
-		</a>
-		<a href="#" class="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:inline :bg-gray-800 :text-gray-200 hover:bg-blue-500 :hover:bg-blue-500 hover:text-white :hover:text-gray-200">
-			5
-		</a>
+		for page := 1; page <= totalPages; page++ {
+			<a href={ templ.URL(fmt.Sprintf("/grid?page=%d&limit=%d", page, limit)) } class="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:inline :bg-gray-800 :text-gray-200 hover:bg-blue-500 :hover:bg-blue-500 hover:text-white :hover:text-gray-200">
+				{ strconv.Itoa(page) }
+			</a>
+		}
 		<a href="#" class="px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md :bg-gray-800 :text-gray-200 hover:bg-blue-500 :hover:bg-blue-500 hover:text-white :hover:text-gray-200">
 			<div class="flex items-center -mx-1">
 				<span class="mx-1">
@@ -87,7 +78,6 @@ templ renderGridRow(id string, name string, status string, position string, emai
 	<tr>
 		<td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
 			<div class="inline-flex items-center gap-x-3">
-				// <input type="checkbox" class="text-blue-500 border-gray-300 rounded :bg-gray-900 :ring-offset-gray-900 :border-gray-700"/>
 				<div class="flex items-center gap-x-2">
 					<img class="object-cover w-10 h-10 rounded-full" src={ imgSrc } alt={ id }/>
 					<div>
@@ -144,7 +134,6 @@ templ renderEditableGridRow(id string, name string, status string, position stri
 	<tr class="editing" hx-trigger="cancel">
 		<td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
 			<div class="inline-flex items-center gap-x-3">
-				// <input type="checkbox" class="text-blue-500 border-gray-300 rounded :bg-gray-900 :ring-offset-gray-900 :border-gray-700"/>
 				<div class="flex items-center gap-x-2">
 					<img class="object-cover w-10 h-10 rounded-full" src={ imgSrc } alt={ id }/>
 					<div>
@@ -215,11 +204,11 @@ templ renderEditableGridRow(id string, name string, status string, position stri
 	</tr>
 }
 
-templ grid(data models.GridData) {
+templ grid(data models.GridData, totalPages int) {
 	<section class="container px-4 mx-auto my-auto">
 		<div class="flex flex-col justify-center">
 			<div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-				<div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+				<div class="min-w-full py-2 align-middle md:px-6 lg:px-8">
 					<div class="overflow-hidden border border-gray-200 :border-gray-700 md:rounded-lg">
 						<table class="min-w-full divide-y divide-gray-200 :divide-gray-700 tr htmx-swapping">
 							@gridHeader()
@@ -238,16 +227,14 @@ templ grid(data models.GridData) {
 			</div>
 		</div>
 		<div class="flex justify-center mt-4">
-			@gridPagination()
+			@gridPagination(totalPages, 1, 10)
 		</div>
 	</section>
 }
 
-templ Grid(data models.GridData) {
+templ Grid(data models.GridData, totalPages int) {
 	@layout.Base("HTMX Grid") {
-		<div class="my-[100px]">
-			@grid(data)
-		</div>
+		@grid(data, totalPages)
 	}
 }
 

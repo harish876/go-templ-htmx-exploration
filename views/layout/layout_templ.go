@@ -36,7 +36,7 @@ func Base(title string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title><script src=\"https://unpkg.com/htmx.org@1.9.9\" integrity=\"sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX\" crossorigin=\"anonymous\"></script><script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><script src=\"/js/confirm.js\"></script><!-- Alpine.js --><script src=\"https://unpkg.com/alpinejs\" defer></script><script>\n                /* Script to toggle light and dark mode */\n            </script><link rel=\"stylesheet\" href=\"/css/static.css\"></head><body hx-boost=\"true\"><main>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title><script src=\"https://unpkg.com/htmx.org@1.9.9\" integrity=\"sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX\" crossorigin=\"anonymous\"></script><script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><script src=\"/js/confirm.js\"></script><!-- Alpine.js --><script src=\"https://unpkg.com/alpinejs\" defer></script><script>\n                /* Script to toggle light and dark mode */\n            </script><link rel=\"stylesheet\" href=\"/css/static.css\"></head><body hx-boost=\"true\" class=\"mt-10\"><main>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
