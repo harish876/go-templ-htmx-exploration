@@ -39,7 +39,7 @@ func GridHandler(c echo.Context) error {
 		}
 		paginatedData = services.Data[offset:end]
 	} else {
-		paginatedData = []models.GridDataRow{}
+		paginatedData = models.GridData{}
 	}
 
 	return Render(c, http.StatusOK, grid.Grid(paginatedData, totalPages))

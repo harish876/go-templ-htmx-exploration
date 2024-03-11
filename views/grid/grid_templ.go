@@ -19,7 +19,7 @@ import (
 	"strconv"
 )
 
-func gridPagination(totalPages int, page int, limit int) templ.Component {
+func gridPagination(totalPages int, currentPage int, limit int) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -53,7 +53,7 @@ func gridPagination(totalPages int, page int, limit int) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(page))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 25, Col: 24}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 31, Col: 24}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -135,7 +135,7 @@ func renderGridRow(id string, name string, status string, position string, email
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 83, Col: 63}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 92, Col: 63}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -148,7 +148,7 @@ func renderGridRow(id string, name string, status string, position string, email
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(id)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 85, Col: 11}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 94, Col: 11}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -161,7 +161,7 @@ func renderGridRow(id string, name string, status string, position string, email
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(utils.StartCase(status))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 94, Col: 78}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 103, Col: 78}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
@@ -174,7 +174,7 @@ func renderGridRow(id string, name string, status string, position string, email
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(position)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 97, Col: 89}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 106, Col: 89}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
@@ -187,7 +187,7 @@ func renderGridRow(id string, name string, status string, position string, email
 		var templ_7745c5c3_Var10 string
 		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(email)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 98, Col: 86}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 107, Col: 86}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
@@ -205,7 +205,7 @@ func renderGridRow(id string, name string, status string, position string, email
 			var templ_7745c5c3_Var11 string
 			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(item)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 102, Col: 99}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 111, Col: 99}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
@@ -279,7 +279,7 @@ func renderEditableGridRow(id string, name string, status string, position strin
 		var templ_7745c5c3_Var13 string
 		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 139, Col: 63}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 148, Col: 63}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 		if templ_7745c5c3_Err != nil {
@@ -292,7 +292,7 @@ func renderEditableGridRow(id string, name string, status string, position strin
 		var templ_7745c5c3_Var14 string
 		templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(id)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 141, Col: 11}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 150, Col: 11}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 		if templ_7745c5c3_Err != nil {
@@ -339,7 +339,7 @@ func renderEditableGridRow(id string, name string, status string, position strin
 		var templ_7745c5c3_Var15 string
 		templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(email)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 175, Col: 86}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 184, Col: 86}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 		if templ_7745c5c3_Err != nil {
@@ -357,7 +357,7 @@ func renderEditableGridRow(id string, name string, status string, position strin
 			var templ_7745c5c3_Var16 string
 			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(item)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 179, Col: 99}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/grid/grid.templ`, Line: 188, Col: 99}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 			if templ_7745c5c3_Err != nil {
@@ -426,7 +426,17 @@ func grid(data models.GridData, totalPages int) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</tbody></table></div></div></div></div><div class=\"flex justify-center mt-4\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</tbody></table>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if len(data) == 0 {
+			templ_7745c5c3_Err = components.GridEmpty().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div></div></section><div class=\"flex justify-center mt-4\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -434,7 +444,7 @@ func grid(data models.GridData, totalPages int) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></section>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
