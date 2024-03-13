@@ -127,7 +127,7 @@ var Data = models.GridData{
 		Status:   "Active",
 		Position: "UI/UX Designer",
 		Email:    "elina@example.com",
-		Badges:   []string{"Design"},
+		Badges:   []string{"Design", "Product", "Marketing"},
 		Img:      "https://randomuser.me/api/portraits/women/5.jpg",
 	},
 }

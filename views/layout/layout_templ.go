@@ -10,6 +10,8 @@ import "context"
 import "io"
 import "bytes"
 
+import "github.com/harish876/go-templ-htmx-exploration/views/sidebar"
+
 func Base(title string) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
@@ -30,13 +32,21 @@ func Base(title string) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/layout/layout.templ`, Line: 15, Col: 17}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views\layout\layout.templ`, Line: 17, Col: 17}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title><script src=\"https://unpkg.com/htmx.org@1.9.9\" integrity=\"sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX\" crossorigin=\"anonymous\"></script><script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><script src=\"/js/confirm.js\"></script><!-- Alpine.js --><script src=\"https://unpkg.com/alpinejs\" defer></script><script>\n                /* Script to toggle light and dark mode */\n            </script><link rel=\"stylesheet\" href=\"/css/static.css\"></head><body hx-boost=\"true\" class=\"mt-10\"><main>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title><script src=\"https://unpkg.com/htmx.org@1.9.9\" integrity=\"sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX\" crossorigin=\"anonymous\"></script><script src=\"https://cdn.jsdelivr.net/npm/sweetalert2@11\"></script><script src=\"/js/confirm.js\" defer></script><!-- Alpine.js --><script src=\"https://unpkg.com/alpinejs\"></script><script>\r\n                /* Script to toggle light and  mode */\r\n            </script><link rel=\"stylesheet\" href=\"/css/static.css\"></head><body hx-boost=\"true\"><layout class=\"main-content flex flex-row flex-grow p-4\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = sidebar.Sidebar().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex justify-center mx-auto\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -44,7 +54,7 @@ func Base(title string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</main><script lang=\"js\">\n\t\t\t     document.body.addEventListener('htmx:beforeSwap', function(evt) {\n\t\t\t    if(evt.detail.xhr.status === 404){\n\t\t\t        // alert the user when a 404 occurs (maybe use a nicer mechanism than alert())\n\t\t\t        alert(\"Error: Could Not Find Resource\");\n\t\t\t    } else if(evt.detail.xhr.status === 422){\n\t\t\t        // allow 422 responses to swap as we are using this as a signal that\n\t\t\t        // a form was submitted with bad data and want to rerender with the\n\t\t\t        // errors\n\t\t\t        //\n\t\t\t        // set isError to false to avoid error logging in console\n                    alert(\"Bad Request Debug\")\n\t\t\t        evt.detail.shouldSwap = true;\n\t\t\t        evt.detail.isError = false;\n\t\t\t    } else if(evt.detail.xhr.status === 418){\n\t\t\t        // if the response code 418 (I'm a teapot) is returned, retarget the\n\t\t\t        // content of the response to the element with the id `teapot`s\n\t\t\t        evt.detail.shouldSwap = true;\n\t\t\t        evt.detail.target = htmx.find(\"#teapot\");\n\t\t\t    }\n\t\t\t});\n\t\t\t</script></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></layout><script lang=\"js\">\r\n\t\t\t     document.body.addEventListener('htmx:beforeSwap', function(evt) {\r\n\t\t\t    if(evt.detail.xhr.status === 404){\r\n\t\t\t        // alert the user when a 404 occurs (maybe use a nicer mechanism than alert())\r\n\t\t\t        alert(\"Error: Could Not Find Resource\");\r\n\t\t\t    } else if(evt.detail.xhr.status === 422){\r\n\t\t\t        // allow 422 responses to swap as we are using this as a signal that\r\n\t\t\t        // a form was submitted with bad data and want to rerender with the\r\n\t\t\t        // errors\r\n\t\t\t        //\r\n\t\t\t        // set isError to false to avoid error logging in console\r\n                    alert(\"Bad Request Debug\")\r\n\t\t\t        evt.detail.shouldSwap = true;\r\n\t\t\t        evt.detail.isError = false;\r\n\t\t\t    } else if(evt.detail.xhr.status === 418){\r\n\t\t\t        // if the response code 418 (I'm a teapot) is returned, retarget the\r\n\t\t\t        // content of the response to the element with the id `teapot`s\r\n\t\t\t        evt.detail.shouldSwap = true;\r\n\t\t\t        evt.detail.target = htmx.find(\"#teapot\");\r\n\t\t\t    }\r\n\t\t\t});\r\n\t\t\t</script></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
