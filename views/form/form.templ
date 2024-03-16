@@ -12,9 +12,9 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 		novalidate
 	>
 		<div class="col-span-6 sm:col-span-3">
-			@components.Input(components.InputProps{
+			@components.Input(models.InputProps{
 				Id:       "FirstName",
-				Typ:      components.InputTypeText,
+				Typ:      models.InputTypeText,
 				Name:     "first_name",
 				Label:    "First Name",
 				Class:    "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
@@ -23,9 +23,9 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 			})
 		</div>
 		<div class="col-span-6 sm:col-span-3">
-			@components.Input(components.InputProps{
+			@components.Input(models.InputProps{
 				Id:    "LastName",
-				Typ:   components.InputTypeText,
+				Typ:   models.InputTypeText,
 				Name:  "last_name",
 				Label: "Last Name",
 				Class: "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
@@ -33,9 +33,9 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 			})
 		</div>
 		<div class="col-span-6">
-			@components.Input(components.InputProps{
+			@components.Input(models.InputProps{
 				Id:       "Email",
-				Typ:      components.InputTypeEmail,
+				Typ:      models.InputTypeEmail,
 				Name:     "email",
 				Label:    "Email",
 				Class:    "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
@@ -45,9 +45,9 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 		</div>
 		<div class="col-span-6 sm:col-span-3">
 			if formErrors.Password == "" {
-				@components.Input(components.InputProps{
+				@components.Input(models.InputProps{
 					Id:       "Password",
-					Typ:      components.InputTypePassword,
+					Typ:      models.InputTypePassword,
 					Name:     "password",
 					Label:    "Password",
 					Required: true,
@@ -58,9 +58,9 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 					Password must be at least 7 characters long
 				</span>
 			} else {
-				@components.Input(components.InputProps{
+				@components.Input(models.InputProps{
 					Id:       "Password",
-					Typ:      components.InputTypePassword,
+					Typ:      models.InputTypePassword,
 					Name:     "password",
 					Label:    "Password",
 					Required: true,
@@ -73,9 +73,9 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 			}
 		</div>
 		<div class="col-span-6 sm:col-span-3">
-			@components.Input(components.InputProps{
+			@components.Input(models.InputProps{
 				Id:      "PasswordConfirmation",
-				Typ:     components.InputTypePassword,
+				Typ:     models.InputTypePassword,
 				Name:    "password_confirmation",
 				Label:   "Password Confirmation",
 				Class:   "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
@@ -83,9 +83,20 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 			})
 		</div>
 		<div class="col-span-6">
-			@components.Input(components.InputProps{
+			@components.MultiSelect([]models.SelectOption{
+				{Label: "Magenta", Value: "#ff00ff"},
+				{Label: "Blue", Value: "#0000FF"},
+				{Label: "Green", Value: "#00FF00"},
+				{Label: "Red", Value: "#FF0000"}},
+				[]models.SelectOption{
+					{Label: "Magenta", Value: "#ff00ff"},
+				},
+			)
+		</div>
+		<div class="col-span-6">
+			@components.Input(models.InputProps{
 				Id:    "MarketingAccept",
-				Typ:   components.InputTypeCheckbox,
+				Typ:   models.InputTypeCheckbox,
 				Name:  "marketing_accept",
 				Label: "Marketing Accept",
 				Class: "size-5 rounded-md border-gray-200 bg-white shadow-sm",

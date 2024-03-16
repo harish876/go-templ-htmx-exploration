@@ -1,19 +1,8 @@
 package components
 
-type SelectOption struct {
-	Label string
-	Value string
-}
+import "github.com/harish876/go-templ-htmx-exploration/models"
 
-type SelectProps struct {
-	Id           string
-	Name         string
-	Class        string
-	DefaultValue SelectOption
-	Options      []SelectOption
-}
-
-templ Select(selectProps SelectProps) {
+templ Select(selectProps models.SelectProps) {
 	<select
 		name={ selectProps.Name }
 		id={ selectProps.Id }

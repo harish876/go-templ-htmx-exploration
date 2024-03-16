@@ -10,26 +10,9 @@ import "context"
 import "io"
 import "bytes"
 
-const (
-	InputTypeText     = "text"
-	InputTypePassword = "password"
-	InputTypeNumber   = "number"
-	InputTypeEmail    = "email"
-	InputTypeCheckbox = "checkbox"
-)
+import "github.com/harish876/go-templ-htmx-exploration/models"
 
-type InputProps struct {
-	Id       string
-	Typ      string
-	Name     string
-	Value    string
-	Label    string
-	Class    string
-	Required bool
-	Pattern  string
-}
-
-func Input(props InputProps) templ.Component {
+func Input(props models.InputProps) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -57,7 +40,7 @@ func Input(props InputProps) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(props.Label)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views\components\input.templ`, Line: 23, Col: 15}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/input.templ`, Line: 6, Col: 15}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {

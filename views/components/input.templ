@@ -1,25 +1,8 @@
 package components
 
-const (
-	InputTypeText     = "text"
-	InputTypePassword = "password"
-	InputTypeNumber   = "number"
-	InputTypeEmail    = "email"
-	InputTypeCheckbox = "checkbox"
-)
+import "github.com/harish876/go-templ-htmx-exploration/models"
 
-type InputProps struct {
-	Id       string
-	Typ      string
-	Name     string
-	Value    string
-	Label    string
-	Class    string
-	Required bool
-	Pattern  string
-}
-
-templ Input(props InputProps) {
+templ Input(props models.InputProps) {
 	<label for={ props.Id } class="text-sm font-medium text-gray-700 flex gap-2">
 		{ props.Label }
 	</label>
