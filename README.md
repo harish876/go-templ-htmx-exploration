@@ -17,10 +17,5 @@
 
 # Instructions
 
-Dev Command:
-1. npm run start: I know using npm sucks for a Go project, but I sometimes work out of a windows laptop (sigh) so it's a pain using make. Plus I don't know how to run concurrent processes using make. This command builds your 
-   tailwind, generates the template files using Go Templ, and runs air, so great HMR setup.
-
-
-Build Command
-2. go build cmd/main.go
+1. Dev Command: npm run start: I know using npm sucks for a Go project, but I sometimes work out of a Windows laptop (sigh) so it's a pain using make. Plus I don't know how to run concurrent processes using make. This command builds your tailwind styles, generates the template files using Go Templ, and runs air, so great HMR setup.
+2. Build Command: go build cmd/main.go
