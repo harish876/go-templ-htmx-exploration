@@ -72,3 +72,6 @@ document.addEventListener("htmx:confirm",
             });
         }
     })
+
+
+    

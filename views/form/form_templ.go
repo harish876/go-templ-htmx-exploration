@@ -11,10 +11,10 @@ import "io"
 import "bytes"
 
 import "github.com/harish876/go-templ-htmx-exploration/views/layout"
-import "github.com/harish876/go-templ-htmx-exploration/views/components"
-import "github.com/harish876/go-templ-htmx-exploration/models"
+import "github.com/harish876/go-templ-htmx-exploration/components"
+import "github.com/harish876/go-templ-htmx-exploration/components/props"
 
-func exampleForm(formValues models.FormValues, formErrors models.FormErrors, showToast bool, toastMessage string) templ.Component {
+func exampleForm(formValues props.FormValues, formErrors props.FormErrors, showToast bool, toastMessage string) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -31,9 +31,9 @@ func exampleForm(formValues models.FormValues, formErrors models.FormErrors, sho
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.Input(models.InputProps{
+		templ_7745c5c3_Err = components.Input(props.InputProps{
 			Id:       "FirstName",
-			Typ:      models.InputTypeText,
+			Typ:      props.InputTypeText,
 			Name:     "first_name",
 			Label:    "First Name",
 			Class:    "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
@@ -47,9 +47,9 @@ func exampleForm(formValues models.FormValues, formErrors models.FormErrors, sho
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.Input(models.InputProps{
+		templ_7745c5c3_Err = components.Input(props.InputProps{
 			Id:    "LastName",
-			Typ:   models.InputTypeText,
+			Typ:   props.InputTypeText,
 			Name:  "last_name",
 			Label: "Last Name",
 			Class: "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
@@ -62,9 +62,9 @@ func exampleForm(formValues models.FormValues, formErrors models.FormErrors, sho
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.Input(models.InputProps{
+		templ_7745c5c3_Err = components.Input(props.InputProps{
 			Id:       "Email",
-			Typ:      models.InputTypeEmail,
+			Typ:      props.InputTypeEmail,
 			Name:     "email",
 			Label:    "Email",
 			Class:    "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
@@ -79,9 +79,9 @@ func exampleForm(formValues models.FormValues, formErrors models.FormErrors, sho
 			return templ_7745c5c3_Err
 		}
 		if formErrors.Password == "" {
-			templ_7745c5c3_Err = components.Input(models.InputProps{
+			templ_7745c5c3_Err = components.Input(props.InputProps{
 				Id:       "Password",
-				Typ:      models.InputTypePassword,
+				Typ:      props.InputTypePassword,
 				Name:     "password",
 				Label:    "Password",
 				Required: true,
@@ -96,9 +96,9 @@ func exampleForm(formValues models.FormValues, formErrors models.FormErrors, sho
 				return templ_7745c5c3_Err
 			}
 		} else {
-			templ_7745c5c3_Err = components.Input(models.InputProps{
+			templ_7745c5c3_Err = components.Input(props.InputProps{
 				Id:       "Password",
-				Typ:      models.InputTypePassword,
+				Typ:      props.InputTypePassword,
 				Name:     "password",
 				Label:    "Password",
 				Required: true,
@@ -130,9 +130,9 @@ func exampleForm(formValues models.FormValues, formErrors models.FormErrors, sho
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.Input(models.InputProps{
+		templ_7745c5c3_Err = components.Input(props.InputProps{
 			Id:      "PasswordConfirmation",
-			Typ:     models.InputTypePassword,
+			Typ:     props.InputTypePassword,
 			Name:    "password_confirmation",
 			Label:   "Password Confirmation",
 			Class:   "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
@@ -145,14 +145,18 @@ func exampleForm(formValues models.FormValues, formErrors models.FormErrors, sho
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.MultiSelect([]models.SelectOption{
+		templ_7745c5c3_Err = components.MultiSelect([]props.SelectOption{
 			{Label: "Magenta", Value: "#ff00ff"},
 			{Label: "Blue", Value: "#0000FF"},
 			{Label: "Green", Value: "#00FF00"},
-			{Label: "Red", Value: "#FF0000"}},
-			[]models.SelectOption{
+			{Label: "Red", Value: "#FF0000"},
+			{Label: "Purple", Value: "#FF000"},
+			{Label: "Cyan", Value: "#FF00"},
+		},
+			[]props.SelectOption{
 				{Label: "Magenta", Value: "#ff00ff"},
 			},
+			"colors",
 		).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -161,9 +165,9 @@ func exampleForm(formValues models.FormValues, formErrors models.FormErrors, sho
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.Input(models.InputProps{
+		templ_7745c5c3_Err = components.Input(props.InputProps{
 			Id:    "MarketingAccept",
-			Typ:   models.InputTypeCheckbox,
+			Typ:   props.InputTypeCheckbox,
 			Name:  "marketing_accept",
 			Label: "Marketing Accept",
 			Class: "size-5 rounded-md border-gray-200 bg-white shadow-sm",
@@ -220,7 +224,7 @@ func formParent() templ.Component {
 	})
 }
 
-func Form(formValues models.FormValues, formErrors models.FormErrors, showBool bool, toastMessage string) templ.Component {
+func Form(formValues props.FormValues, formErrors props.FormErrors, showBool bool, toastMessage string) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {

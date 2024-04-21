@@ -7,7 +7,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/harish876/go-templ-htmx-exploration/models"
+	"github.com/harish876/go-templ-htmx-exploration/components/props"
+	"github.com/harish876/go-templ-htmx-exploration/db"
 	"github.com/harish876/go-templ-htmx-exploration/services"
 	"github.com/harish876/go-templ-htmx-exploration/views/grid"
 	"github.com/labstack/echo/v4"
@@ -18,26 +19,26 @@ var (
 	DEFAULT_LIMIT     = 10
 )
 
-var columns = []models.GridColumn{
+var columns = []props.GridColumn{
 	{
-		Typ:      models.String,
+		Typ:      props.String,
 		Label:    "Name",
 		Key:      "Name",
 		Renderer: "name",
 	},
 	{
-		Typ:      models.String,
+		Typ:      props.String,
 		Label:    "Status",
 		Key:      "Status",
 		Renderer: "status",
 		Editable: true,
-		EditOptions: models.GridEditOptions{
-			EditType: models.EditSelect,
-			EditProps: models.GridSelectEditProps{
+		EditOptions: props.GridEditOptions{
+			EditType: props.EditSelect,
+			EditProps: props.GridSelectEditProps{
 				Id:    "Id",
 				Name:  "status",
 				Class: "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
-				Options: []models.SelectOption{
+				Options: []props.SelectOption{
 					{Label: "Active", Value: "active"},
 					{Label: "Inactive", Value: "inactive"},
 				},
@@ -45,34 +46,50 @@ var columns = []models.GridColumn{
 		},
 	},
 	{
-		Typ:      models.String,
+		Typ:      props.String,
 		Label:    "Role",
 		Key:      "Position",
 		Editable: true,
-		EditOptions: models.GridEditOptions{
-			EditType: models.EditInput,
-			EditProps: models.GridInputEditProps{
+		EditOptions: props.GridEditOptions{
+			EditType: props.EditInput,
+			EditProps: props.GridInputEditProps{
 				Id:    "Id",
-				Typ:   models.InputTypeText,
+				Typ:   props.InputTypeText,
 				Name:  "position",
 				Class: "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
 			},
 		},
 	},
 	{
-		Typ:      models.Array,
+		Typ:      props.Array,
 		Label:    "Badges",
 		Key:      "Badges",
 		Renderer: "badges",
+		Editable: true,
+		EditOptions: props.GridEditOptions{
+			EditType: props.EditMultiSelect,
+			EditProps: props.GridMultiSelectEditProps{
+				Id:   "Id",
+				Name: "badges",
+				Options: []props.SelectOption{
+					{Label: "Design", Value: "Design"},
+					{Label: "Product", Value: "Product"},
+					{Label: "Marketing", Value: "Marketing"},
+					{Label: "Engineering", Value: "Engineering"},
+					{Label: "Analytics", Value: "Analytics"},
+					{Label: "UI Design", Value: "UI Design"},
+				},
+			},
+		},
 	},
 	{
-		Typ:   models.String,
+		Typ:   props.String,
 		Label: "Email",
 		Key:   "Email",
 	},
 }
 
-var gridCtx = models.GridContext[models.GridColumn]{
+var gridCtx = props.GridContext[props.GridColumn]{
 	Title:       "Customers",
 	Subheading:  "",
 	Description: "Example Gird with filters, pagination, export etc...",
@@ -93,27 +110,26 @@ func GridHandler(c echo.Context) error {
 		limit = DEFAULT_LIMIT
 	}
 
-	totalPages := len(services.Data)/limit + 1
+	totalPages := len(db.GridData)/limit + 1
 	offset := (page - 1) * limit
 
-	var paginatedData []models.GridDataRow
-	if offset < len(services.Data) {
+	var paginatedData []props.GridDataRow
+	if offset < len(db.GridData) {
 		end := offset + limit
-		if end > len(services.Data) {
-			end = len(services.Data)
+		if end > len(db.GridData) {
+			end = len(db.GridData)
 		}
-		paginatedData = services.Data[offset:end]
+		paginatedData = db.GridData[offset:end]
 	} else {
-		paginatedData = []models.GridDataRow{}
+		paginatedData = []props.GridDataRow{}
 	}
 
-	var pageOptions = models.GridPagination{
+	var pageOptions = props.GridPagination{
 		Current:    page,
 		TotalPages: totalPages,
 		Limit:      limit,
 	}
-
-	return Render(c, http.StatusOK, grid.Grid[models.GridDataRow](gridCtx, paginatedData, pageOptions))
+	return Render(c, http.StatusOK, grid.Grid(gridCtx, paginatedData, pageOptions))
 }
 
 func GridFilterHandler(c echo.Context) error {
@@ -132,9 +148,9 @@ func GridFilterHandler(c echo.Context) error {
 	filterValue := c.FormValue(filterKey)
 	fmt.Println(filterValue)
 
-	var data []models.GridDataRow
+	var data []props.GridDataRow
 
-	for _, row := range services.Data {
+	for _, row := range db.GridData {
 		fieldValue := getFieldStringValue(row, filterKey)
 		if strings.Contains(strings.ToLower(fieldValue), strings.ToLower(filterValue)) {
 			data = append(data, row)
@@ -150,7 +166,7 @@ func GridFilterHandler(c echo.Context) error {
 	}
 	paginatedData := data[start:end]
 
-	var pageOptions = models.GridPagination{
+	var pageOptions = props.GridPagination{
 		Current:    page,
 		TotalPages: totalPages,
 		Limit:      limit,
@@ -161,18 +177,18 @@ func GridFilterHandler(c echo.Context) error {
 
 func GridRowHandler(c echo.Context) error {
 	id := c.Param("id")
-	row := services.FilterById(services.Data, id)
+	row := services.FilterById(db.GridData, id)
 	return Render(c, http.StatusOK, grid.RenderRow(columns, row))
 }
 
 func UpdateGridRowHandler(c echo.Context) error {
 	id := c.Param("id")
-	var newData = models.GridDataRow{
+	var newData = props.GridDataRow{
 		Id:       id,
 		Status:   c.FormValue("status"),
 		Position: c.FormValue("position"),
 	}
-	updatedRow := services.UpdateById(services.Data, id, newData)
+	updatedRow := services.UpdateById(db.GridData, id, newData)
 	fmt.Println(updatedRow)
 	return Render(c, http.StatusOK, grid.RenderRow(columns, updatedRow))
 }
@@ -185,11 +201,11 @@ func DeleteGridRowHandler(c echo.Context) error {
 
 func RenderEditGridHandler(c echo.Context) error {
 	id := c.Param("id")
-	row := services.FilterById(services.Data, id)
+	row := services.FilterById(db.GridData, id)
 	return Render(c, http.StatusOK, grid.EditRow(columns, row))
 }
 
-func getFieldStringValue(row models.GridDataRow, fieldName string) string {
+func getFieldStringValue(row props.GridDataRow, fieldName string) string {
 	switch fieldName {
 	case "name":
 		return row.Name

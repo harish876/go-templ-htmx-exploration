@@ -1,10 +1,10 @@
 package form
 
 import "github.com/harish876/go-templ-htmx-exploration/views/layout"
-import "github.com/harish876/go-templ-htmx-exploration/views/components"
-import "github.com/harish876/go-templ-htmx-exploration/models"
+import "github.com/harish876/go-templ-htmx-exploration/components"
+import "github.com/harish876/go-templ-htmx-exploration/components/props"
 
-templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, showToast bool, toastMessage string) {
+templ exampleForm(formValues props.FormValues, formErrors props.FormErrors, showToast bool, toastMessage string) {
 	<form
 		class="mt-8 grid grid-cols-6 gap-6 group"
 		hx-post="/form"
@@ -12,9 +12,9 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 		novalidate
 	>
 		<div class="col-span-6 sm:col-span-3">
-			@components.Input(models.InputProps{
+			@components.Input(props.InputProps{
 				Id:       "FirstName",
-				Typ:      models.InputTypeText,
+				Typ:      props.InputTypeText,
 				Name:     "first_name",
 				Label:    "First Name",
 				Class:    "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
@@ -23,9 +23,9 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 			})
 		</div>
 		<div class="col-span-6 sm:col-span-3">
-			@components.Input(models.InputProps{
+			@components.Input(props.InputProps{
 				Id:    "LastName",
-				Typ:   models.InputTypeText,
+				Typ:   props.InputTypeText,
 				Name:  "last_name",
 				Label: "Last Name",
 				Class: "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
@@ -33,9 +33,9 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 			})
 		</div>
 		<div class="col-span-6">
-			@components.Input(models.InputProps{
+			@components.Input(props.InputProps{
 				Id:       "Email",
-				Typ:      models.InputTypeEmail,
+				Typ:      props.InputTypeEmail,
 				Name:     "email",
 				Label:    "Email",
 				Class:    "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
@@ -45,9 +45,9 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 		</div>
 		<div class="col-span-6 sm:col-span-3">
 			if formErrors.Password == "" {
-				@components.Input(models.InputProps{
+				@components.Input(props.InputProps{
 					Id:       "Password",
-					Typ:      models.InputTypePassword,
+					Typ:      props.InputTypePassword,
 					Name:     "password",
 					Label:    "Password",
 					Required: true,
@@ -58,9 +58,9 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 					Password must be at least 7 characters long
 				</span>
 			} else {
-				@components.Input(models.InputProps{
+				@components.Input(props.InputProps{
 					Id:       "Password",
-					Typ:      models.InputTypePassword,
+					Typ:      props.InputTypePassword,
 					Name:     "password",
 					Label:    "Password",
 					Required: true,
@@ -73,9 +73,9 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 			}
 		</div>
 		<div class="col-span-6 sm:col-span-3">
-			@components.Input(models.InputProps{
+			@components.Input(props.InputProps{
 				Id:      "PasswordConfirmation",
-				Typ:     models.InputTypePassword,
+				Typ:     props.InputTypePassword,
 				Name:    "password_confirmation",
 				Label:   "Password Confirmation",
 				Class:   "mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm",
@@ -83,20 +83,24 @@ templ exampleForm(formValues models.FormValues, formErrors models.FormErrors, sh
 			})
 		</div>
 		<div class="col-span-6">
-			@components.MultiSelect([]models.SelectOption{
+			@components.MultiSelect([]props.SelectOption{
 				{Label: "Magenta", Value: "#ff00ff"},
 				{Label: "Blue", Value: "#0000FF"},
 				{Label: "Green", Value: "#00FF00"},
-				{Label: "Red", Value: "#FF0000"}},
-				[]models.SelectOption{
+				{Label: "Red", Value: "#FF0000"},
+				{Label: "Purple", Value: "#FF000"},
+				{Label: "Cyan", Value: "#FF00"},
+			},
+				[]props.SelectOption{
 					{Label: "Magenta", Value: "#ff00ff"},
 				},
+				"colors",
 			)
 		</div>
 		<div class="col-span-6">
-			@components.Input(models.InputProps{
+			@components.Input(props.InputProps{
 				Id:    "MarketingAccept",
-				Typ:   models.InputTypeCheckbox,
+				Typ:   props.InputTypeCheckbox,
 				Name:  "marketing_accept",
 				Label: "Marketing Accept",
 				Class: "size-5 rounded-md border-gray-200 bg-white shadow-sm",
@@ -180,7 +184,7 @@ templ formParent() {
 	</section>
 }
 
-templ Form(formValues models.FormValues, formErrors models.FormErrors, showBool bool, toastMessage string) {
+templ Form(formValues props.FormValues, formErrors props.FormErrors, showBool bool, toastMessage string) {
 	@layout.Base("Go HTMX Templ Exploration") {
 		@formParent() {
 			@exampleForm(formValues, formErrors, showBool, toastMessage)

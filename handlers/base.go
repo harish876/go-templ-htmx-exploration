@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/a-h/templ"
-	"github.com/harish876/go-templ-htmx-exploration/views/components"
+	"github.com/harish876/go-templ-htmx-exploration/components"
 	"github.com/labstack/echo/v4"
 )
 

@@ -5,13 +5,13 @@ import (
 	"net/http"
 	"regexp"
 
-	"github.com/harish876/go-templ-htmx-exploration/models"
+	"github.com/harish876/go-templ-htmx-exploration/components/props"
 	"github.com/harish876/go-templ-htmx-exploration/views/form"
 	"github.com/labstack/echo/v4"
 )
 
 func FormSubmissionHandler(c echo.Context) error {
-	formValues := models.FormValues{
+	formValues := props.FormValues{
 		FirstName:            c.FormValue("first_name"),
 		LastName:             c.FormValue("last_name"),
 		Email:                c.FormValue("email"),
@@ -20,7 +20,7 @@ func FormSubmissionHandler(c echo.Context) error {
 		MarketingAccept:      c.FormValue("marketing_accept"),
 	}
 
-	var formErrors models.FormErrors
+	var formErrors props.FormErrors
 	emailRegex := `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`
 	regex := regexp.MustCompile(emailRegex)
 
@@ -37,9 +37,9 @@ func FormSubmissionHandler(c echo.Context) error {
 		return Render(c, 422, form.Form(formValues, formErrors, false, ""))
 	}
 
-	return Render(c, http.StatusOK, form.Form(models.FormValues{}, models.FormErrors{}, true, "Success"))
+	return Render(c, http.StatusOK, form.Form(props.FormValues{}, props.FormErrors{}, true, "Success"))
 }
 
 func FormHandler(c echo.Context) error {
-	return Render(c, http.StatusOK, form.Form(models.FormValues{}, models.FormErrors{}, false, ""))
+	return Render(c, http.StatusOK, form.Form(props.FormValues{}, props.FormErrors{}, false, ""))
 }
